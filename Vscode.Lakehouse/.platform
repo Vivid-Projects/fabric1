@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Lakehouse",
+    "displayName": "Vscode",
+    "description": ""
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d3683846-0398-a1ea-4669-c19b466e2184"
+  }
+}
