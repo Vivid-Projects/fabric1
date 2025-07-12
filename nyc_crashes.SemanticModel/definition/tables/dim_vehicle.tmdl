@@ -1,0 +1,86 @@
+table dim_vehicle
+	lineageTag: aa9ce9be-9e42-4ffe-a430-efe4f30ff45f
+	sourceLineageTag: [dbo].[dim_vehicle]
+
+	column surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 34132224-9d9e-4a09-8b21-513569cf9c1c
+		sourceLineageTag: surrogate_key
+		summarizeBy: none
+		sourceColumn: surrogate_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column vehicle_type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 29274a29-de72-4ac6-a1b8-9d0fb227e6e4
+		sourceLineageTag: vehicle_type
+		summarizeBy: none
+		sourceColumn: vehicle_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 92b056f1-14e1-4ba9-aaf6-87330c5e2861
+		sourceLineageTag: category
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 16f89149-d9bc-4fec-8c2d-3cacd340a7c0
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: c085f740-4699-4a19-8987-7e0481adcc43
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f0ebe9ac-4caf-4829-9a87-5389fb013924
+		sourceLineageTag: is_current
+		summarizeBy: none
+		sourceColumn: is_current
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_vehicle = entity
+		mode: directLake
+		source
+			entityName: dim_vehicle
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

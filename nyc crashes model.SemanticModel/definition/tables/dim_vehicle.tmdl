@@ -1,0 +1,77 @@
+table dim_vehicle
+	lineageTag: 47b99ae4-0481-4965-8e26-48c7994ace80
+	sourceLineageTag: [dbo].[dim_vehicle]
+
+	column surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: df4a3d5a-bf01-4dca-9ec5-fb709f564e2f
+		sourceLineageTag: surrogate_key
+		summarizeBy: sum
+		sourceColumn: surrogate_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column vehicle_type
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 71abb58f-48e0-47ed-bfd3-1b3fae75d2e3
+		sourceLineageTag: vehicle_type
+		summarizeBy: none
+		sourceColumn: vehicle_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d227e3b5-f441-46ac-8921-918da03ecbb3
+		sourceLineageTag: category
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 2ee776f0-8365-41c2-a734-211364c97b21
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: cc1510ff-8bcd-485a-bd57-fb9dc236fffa
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f4f2c0c7-702d-4a08-bb99-70c25b88392f
+		sourceLineageTag: is_current
+		summarizeBy: sum
+		sourceColumn: is_current
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_vehicle = entity
+		mode: directLake
+		source
+			entityName: dim_vehicle
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

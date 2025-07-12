@@ -39,6 +39,148 @@
             ]
           }
         ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "d8783aad-a1df-aaab-4c94-16b869d7cf05",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "dimension tables",
+        "dependsOn": [
+          {
+            "activity": "transform",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "2a507019-26df-8a11-43ed-5f909deada3e",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "facttable",
+        "dependsOn": [
+          {
+            "activity": "dimension tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PBISemanticModelRefresh",
+        "typeProperties": {
+          "method": "post",
+          "groupId": "36952dd4-29ea-4c9a-85fa-b35583ab33cc",
+          "datasetId": "87e5bf16-401d-48e4-a695-e2d309c4ec7d",
+          "commitMode": "Transactional",
+          "objects": [
+            {
+              "table": "dim_location"
+            },
+            {
+              "table": "dim_vehicle"
+            },
+            {
+              "table": "dim_factor"
+            },
+            {
+              "table": "dim_date"
+            },
+            {
+              "table": "fact_crashes"
+            }
+          ],
+          "waitOnCompletion": true,
+          "operationType": "SemanticModelRefresh"
+        },
+        "externalReferences": {
+          "connection": "e8f04e67-a163-4c57-a290-8436d42101e4"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Semantic model refresh",
+        "dependsOn": [
+          {
+            "activity": "facttable",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Office365Outlook",
+        "typeProperties": {
+          "inputs": {
+            "body": {
+              "To": "iborivivid5@gmail.com",
+              "Subject": "fialed etl ",
+              "Body": "<p>your etl fialed&nbsp;</p>",
+              "Sensitivity": "",
+              "Importance": "Normal"
+            },
+            "method": "post",
+            "path": "/v2/Mail"
+          }
+        },
+        "name": "Office 365 Outlook1",
+        "dependsOn": [
+          {
+            "activity": "Semantic model refresh",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "extract",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "transform",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "dimension tables",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          },
+          {
+            "activity": "facttable",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
       }
     ]
   }

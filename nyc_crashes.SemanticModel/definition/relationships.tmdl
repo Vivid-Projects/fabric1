@@ -1,0 +1,16 @@
+relationship a868d929-02d7-5a87-0cca-896329d5e478
+	fromColumn: fact_crashes.date_key
+	toColumn: dim_date.Date_key
+
+relationship d8483246-8364-b5fb-671e-b425917c2f6e
+	fromColumn: fact_crashes.location_key
+	toColumn: dim_location.surrogate_key
+
+relationship 8f334a49-9e7a-8203-50b8-a5ba45ce597d
+	fromColumn: fact_crashes.factor_key
+	toColumn: dim_factor.Surrogate_key
+
+relationship ea1ec597-a916-bac7-93d3-96b76252f361
+	fromColumn: fact_crashes.vehicle_key
+	toColumn: dim_vehicle.surrogate_key
+

@@ -1,0 +1,110 @@
+table fact_crashes
+	lineageTag: f00d1dca-56e7-4cbe-95a2-0f76302204fd
+	sourceLineageTag: [dbo].[fact_crashes]
+
+	column collision_id
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5398716f-46d5-4203-b4f9-f6fb07edec0b
+		sourceLineageTag: collision_id
+		summarizeBy: none
+		sourceColumn: collision_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: e9d6eeb7-b134-4200-85c0-2a66f90b9510
+		sourceLineageTag: date_key
+		summarizeBy: sum
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column factor_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 37981ee4-50ce-48e1-8eb5-5f7778ad6fdc
+		sourceLineageTag: factor_key
+		summarizeBy: sum
+		sourceColumn: factor_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column vehicle_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: edfc3193-a59f-43e1-998b-f84b077acfac
+		sourceLineageTag: vehicle_key
+		summarizeBy: sum
+		sourceColumn: vehicle_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 79a0f84a-3b6a-41ac-962a-30d931b6cb91
+		sourceLineageTag: location_key
+		summarizeBy: sum
+		sourceColumn: location_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_persons_injured
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: f21aae26-8add-4f22-9f8f-c9c6b83ded8e
+		sourceLineageTag: number_of_persons_injured
+		summarizeBy: sum
+		sourceColumn: number_of_persons_injured
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_persons_killed
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 415c39fa-f272-4e63-902c-f357344f3869
+		sourceLineageTag: number_of_persons_killed
+		summarizeBy: sum
+		sourceColumn: number_of_persons_killed
+
+		annotation SummarizationSetBy = Automatic
+
+	column crash_month
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 876ed564-e7ee-4577-8fde-a1d1c69cef2e
+		sourceLineageTag: crash_month
+		summarizeBy: none
+		sourceColumn: crash_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: bdeafac7-0037-41c4-8b22-9692938ea0a2
+		sourceLineageTag: year
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_crashes = entity
+		mode: directLake
+		source
+			entityName: fact_crashes
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

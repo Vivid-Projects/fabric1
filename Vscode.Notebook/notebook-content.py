@@ -376,7 +376,7 @@ null_rows = spark.sql("""
 
 # Step 2: Load existing error fact rows
 existing_errors = spark.table("fact_error_event").filter(
-    col("error_type") == "NULL_CHECK"
+    col("error_type") == "Null_check"
 ).select("row_identifier", "columns_checked", "error_type")
 
 # Step 3: Anti-join to exclude already logged issues
@@ -438,7 +438,7 @@ duplicate_rows = (
     spark.table("nyc_crashes")
     .join(duplicate_keys, on=duplicate_check_cols, how="inner")
     .withColumn("columns_checked", lit(",".join(duplicate_check_cols)))
-    .withColumn("error_type", lit("DUPLICATE_CHECK"))
+    .withColumn("error_type", lit("Duplicat_check"))
     .withColumn("severity", lit("Low"))
     .withColumn("error_description", lit("Duplicate record found"))
     .withColumn("error_timestamp", current_timestamp())
@@ -448,7 +448,7 @@ duplicate_rows = (
 
 # Step 4: Load existing duplicate error logs
 existing_duplicates = spark.table("fact_error_event").filter(
-    col("error_type") == "DUPLICATE_CHECK"
+    col("error_type") == "Duplicat_check"
 ).select("row_identifier", "columns_checked", "error_type")
 
 # Step 5: Filter out already logged duplicates
@@ -510,7 +510,7 @@ null_rows = spark.sql("""
 """).withColumn("columns_checked", 
       lit("Factor")
 ).withColumn("error_type", 
-      lit("NULL_CHECK")
+      lit("Null_check")
 ).withColumn("severity", 
       lit("Meduim")
 ).withColumn("error_description", 
@@ -525,7 +525,7 @@ null_rows = spark.sql("""
 
 # Step 2: Load existing error fact rows
 existing_errors = spark.table("fact_error_event").filter(
-    col("error_type") == "NULL_CHECK"
+    col("error_type") == "Null_check"
 ).select("row_identifier", "columns_checked", "error_type")
 
 # Step 3: Anti-join to exclude already logged issues
@@ -582,7 +582,7 @@ null_rows = spark.sql("""
 """).withColumn("columns_checked", 
       lit("Vehicle_type")
 ).withColumn("error_type", 
-      lit("NULL_CHECK")
+      lit("Null_check")
 ).withColumn("severity", 
       lit("Meduim")
 ).withColumn("error_description", 
@@ -597,7 +597,7 @@ null_rows = spark.sql("""
 
 # Step 2: Load existing error fact rows
 existing_errors = spark.table("fact_error_event").filter(
-    col("error_type") == "NULL_CHECK"
+    col("error_type") == "Null_check"
 ).select("row_identifier", "columns_checked", "error_type")
 
 # Step 3: Anti-join to exclude already logged issues
@@ -898,6 +898,19 @@ df_new.filter(col("vehicle_type_code1").isNull()).count()
 
 # CELL ********************
 
+df_new = df_new.withColumn('borough',initcap("borough"))
+df_new = df_new.withColumn('contributing_factor_vehicle_1',initcap("contributing_factor_vehicle_1"))
+df_new = df_new.withColumn('vehicle_type_code1',initcap("vehicle_type_code1"))
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
+
 display(df_new.printSchema())
 
 # METADATA ********************
@@ -930,8 +943,14 @@ df_partitioned.write.format("delta") \
 
 # MAGIC %%sql
 # MAGIC 
-# MAGIC SELECT  contributing_factor_vehicle_1, count(*) FROM silver_nyc_crashes
-# MAGIC GROUP BY contributing_factor_vehicle_1
+# MAGIC SELECT *
+# MAGIC FROM silver_nyc_crashes S
+# MAGIC JOIN fact_crashes F ON 
+# MAGIC S.collision_id =F.collision_id
+# MAGIC JOIN dim_location L ON
+# MAGIC L.borough = S.borough
+# MAGIC WHERE DATE(extraction_timestamp) >= DATE('2025-07-11')
+# MAGIC AND location_key IS NULL
 
 # METADATA ********************
 
@@ -943,8 +962,8 @@ df_partitioned.write.format("delta") \
 # CELL ********************
 
 # MAGIC %%sql
-# MAGIC SELECT  vehicle_type_code1, count(*) FROM silver_nyc_crashes
-# MAGIC GROUP BY vehicle_type_code1
+# MAGIC SELECT * FROM dim_location
+# MAGIC WHERE surrogate_key IS NULL
 
 # METADATA ********************
 
@@ -972,6 +991,17 @@ df_partitioned.write.format("delta") \
 # sdf
 # 
 
+
+# CELL ********************
+
+display(df_new)
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
 
 # CELL ********************
 

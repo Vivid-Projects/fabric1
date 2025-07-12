@@ -1,0 +1,112 @@
+table dim_location
+	lineageTag: d567eace-2489-476f-845e-7ba900966654
+	sourceLineageTag: [dbo].[dim_location]
+
+	column surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: ba34db98-303b-4ddd-9ba4-e09cba95f6f1
+		sourceLineageTag: surrogate_key
+		summarizeBy: none
+		sourceColumn: surrogate_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column log_lat
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 75f79e67-ca28-4c95-bf14-3b36f74abd0c
+		sourceLineageTag: log_lat
+		summarizeBy: none
+		sourceColumn: log_lat
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		formatString: 0.00
+		sourceProviderType: float
+		lineageTag: 42a63f6e-b94e-4cf9-8809-71229aea8fa0
+		sourceLineageTag: latitude
+		summarizeBy: none
+		sourceColumn: latitude
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column longitude
+		dataType: double
+		formatString: 0.00
+		sourceProviderType: float
+		lineageTag: b4909377-af61-45a5-99b1-7ef6290f08c4
+		sourceLineageTag: longitude
+		summarizeBy: none
+		sourceColumn: longitude
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column borough
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5e6dc3e0-77d4-4568-9513-fe9340cfdb04
+		sourceLineageTag: borough
+		summarizeBy: none
+		sourceColumn: borough
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 2d1d1b3e-034c-4514-86ee-3c8933688bf4
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: b93184d9-c468-40be-9173-c1755366f6db
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 9cdc94c7-999d-4b01-a416-a13e4873e096
+		sourceLineageTag: is_current
+		summarizeBy: none
+		sourceColumn: is_current
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_location = entity
+		mode: directLake
+		source
+			entityName: dim_location
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

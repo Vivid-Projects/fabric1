@@ -1,0 +1,98 @@
+table dim_factor
+	lineageTag: bbcf2fe1-1ee9-418c-94f0-17ff618e841c
+	sourceLineageTag: [dbo].[dim_factor]
+
+	column Surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: bca35664-0f39-4b2f-b49f-2f48cfa8cb24
+		sourceLineageTag: surrogate_key
+		summarizeBy: none
+		sourceColumn: surrogate_key
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Factor
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: c4d91358-4c32-431f-b91b-a7e46a57c18d
+		sourceLineageTag: factor
+		summarizeBy: none
+		sourceColumn: factor
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: d017a157-1d09-4c02-863d-a1629ef6a9b9
+		sourceLineageTag: category
+		summarizeBy: none
+		sourceColumn: category
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Effective_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 6436d210-0f3c-4b40-9ece-89788aa276d0
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column End_date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: c686b68d-9a51-48c8-add1-cce6cf053e96
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_current
+		dataType: int64
+		isHidden
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c16d6114-d38b-4e93-9171-d0ea5a881252
+		sourceLineageTag: is_current
+		summarizeBy: none
+		sourceColumn: is_current
+
+		changedProperty = IsHidden
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_factor = entity
+		mode: directLake
+		source
+			entityName: dim_factor
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

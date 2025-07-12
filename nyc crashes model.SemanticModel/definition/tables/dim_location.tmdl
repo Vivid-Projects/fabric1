@@ -1,0 +1,101 @@
+table dim_location
+	lineageTag: 768207ce-fe20-474c-8788-dc1160f42d36
+	sourceLineageTag: [dbo].[dim_location]
+
+	column surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: f41c48c8-83c7-4e73-a50e-add30f82e460
+		sourceLineageTag: surrogate_key
+		summarizeBy: sum
+		sourceColumn: surrogate_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column log_lat
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 7de9f1ed-9da3-49fe-853a-c1cce009a3f7
+		sourceLineageTag: log_lat
+		summarizeBy: none
+		sourceColumn: log_lat
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 369077a7-db37-441e-97fe-e58876cd54ef
+		sourceLineageTag: latitude
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		sourceProviderType: float
+		lineageTag: 664454dd-de4d-4b0b-907a-6e8260acde72
+		sourceLineageTag: longitude
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column borough
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: bdaa6b75-7640-46ba-bec5-f8dd80409ef3
+		sourceLineageTag: borough
+		summarizeBy: none
+		sourceColumn: borough
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 46e02d45-f559-4a57-af1e-f498112d1b17
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: e99b3ad0-5af5-4c7e-b78e-ce819cfd0f1b
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 0dcac288-1df8-4954-a7cf-1e00dc3f3c6b
+		sourceLineageTag: is_current
+		summarizeBy: sum
+		sourceColumn: is_current
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_location = entity
+		mode: directLake
+		source
+			entityName: dim_location
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

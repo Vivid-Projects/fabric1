@@ -1,0 +1,77 @@
+table dim_factor
+	lineageTag: f2185bd5-68c6-46b5-9510-6313127a7994
+	sourceLineageTag: [dbo].[dim_factor]
+
+	column surrogate_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: a35c02e6-3f1d-48b2-b884-99350d08b859
+		sourceLineageTag: surrogate_key
+		summarizeBy: sum
+		sourceColumn: surrogate_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column factor
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5bbeff39-9891-44c9-a76e-35a34da3c8bc
+		sourceLineageTag: factor
+		summarizeBy: none
+		sourceColumn: factor
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 85b8e57a-6de4-4dab-93fd-31f60fcf8f68
+		sourceLineageTag: category
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 5013d7d7-eca1-4521-9343-a3ff437fb8f3
+		sourceLineageTag: effective_date
+		summarizeBy: none
+		sourceColumn: effective_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_date
+		dataType: dateTime
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: e6871aa5-efad-425c-b293-6269a13b33cc
+		sourceLineageTag: end_date
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_current
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: df7148c7-a4e8-4cc6-87e6-1c6e6f607639
+		sourceLineageTag: is_current
+		summarizeBy: sum
+		sourceColumn: is_current
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_factor = entity
+		mode: directLake
+		source
+			entityName: dim_factor
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

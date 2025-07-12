@@ -1,0 +1,192 @@
+table dim_date
+	lineageTag: 693a9dcb-a023-40a9-be1d-3f4a2eb0cc2e
+	sourceLineageTag: [dbo].[dim_date]
+	dataCategory: Time
+
+	column Date_key
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 9570eac3-4d9d-4756-a0d9-a53d7c872d04
+		sourceLineageTag: date_key
+		summarizeBy: none
+		sourceColumn: date_key
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Full_date
+		dataType: dateTime
+		isKey
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 6a096711-156b-44e8-bd85-bbb1e2630d4c
+		sourceLineageTag: full_date
+		summarizeBy: none
+		sourceColumn: full_date
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c765e079-8b12-44a3-9359-206901de9ca0
+		sourceLineageTag: year
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: c12b4b9c-245c-4c0c-9f6d-2a8f0315134f
+		sourceLineageTag: quarter
+		summarizeBy: none
+		sourceColumn: quarter
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 34dbee34-c264-4042-bde5-dc3613c22fec
+		sourceLineageTag: month
+		summarizeBy: none
+		sourceColumn: month
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 5b6af3d8-31cc-4d1a-9352-cf7dca161436
+		sourceLineageTag: month_name
+		summarizeBy: none
+		sourceColumn: month_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 81902e6e-8137-4307-8111-9be7cc572150
+		sourceLineageTag: day
+		summarizeBy: none
+		sourceColumn: day
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: dfce68f2-1554-4e9f-a7ba-2b06f6d06c1e
+		sourceLineageTag: day_name
+		summarizeBy: none
+		sourceColumn: day_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day_of_week
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: ad0ccb13-64db-48b3-8d44-f08b33fed85d
+		sourceLineageTag: day_of_week
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_weekend
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 51942bda-840e-4875-b05a-b2faece9da64
+		sourceLineageTag: is_weekend
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_holiday
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 2c51ec1e-902d-46a1-8bd0-a65b795d2c8d
+		sourceLineageTag: is_holiday
+		summarizeBy: none
+		sourceColumn: is_holiday
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Holiday_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 8da21847-b28d-4562-9406-bafe78b2b2be
+		sourceLineageTag: holiday_name
+		summarizeBy: none
+		sourceColumn: holiday_name
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fiscal_year
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: e6ed2c58-afed-40b0-ba61-0ad292c8076b
+		sourceLineageTag: fiscal_year
+		summarizeBy: none
+		sourceColumn: fiscal_year
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fiscal_quarter
+		dataType: int64
+		formatString: 0
+		sourceProviderType: int
+		lineageTag: 6b0fb9bc-6366-4ea4-a315-a0b2c69d3e09
+		sourceLineageTag: fiscal_quarter
+		summarizeBy: none
+		sourceColumn: fiscal_quarter
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = entity
+		mode: directLake
+		source
+			entityName: dim_date
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

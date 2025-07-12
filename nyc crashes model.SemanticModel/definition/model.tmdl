@@ -1,0 +1,23 @@
+model Model
+	culture: en-US
+	collation: Latin1_General_100_BIN2_UTF8
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.146.7727.7 (Main)+bc5f9142edb5be5beb4b90d87b320b00b8f2d382
+
+annotation PBI_QueryOrder = ["DatabaseQuery"]
+
+ref table fact_crashes
+ref table dim_location
+ref table dim_vehicle
+ref table dim_factor
+ref table dim_date
+
+ref cultureInfo en-US
+

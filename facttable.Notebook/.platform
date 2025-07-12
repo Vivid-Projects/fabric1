@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "facttable"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2a507019-26df-8a11-43ed-5f909deada3e"
+  }
+}
