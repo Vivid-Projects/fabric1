@@ -188,5 +188,3 @@ table dim_date
 			schemaName: dbo
 			expressionSource: DatabaseQuery
 
-	annotation PBI_ResultType = Table
-

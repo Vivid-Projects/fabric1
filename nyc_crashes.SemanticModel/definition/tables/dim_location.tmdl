@@ -1,12 +1,12 @@
 table dim_location
-	lineageTag: d567eace-2489-476f-845e-7ba900966654
-	sourceLineageTag: [dbo].[dim_location]
+	lineageTag: 5ba2b3b9-fd83-42b5-8fec-34ca874e4814
+	sourceLineageTag: [dbo].[dim_location1]
 
 	column surrogate_key
 		dataType: int64
 		formatString: 0
 		sourceProviderType: bigint
-		lineageTag: ba34db98-303b-4ddd-9ba4-e09cba95f6f1
+		lineageTag: 6ab34dc0-0b9c-4013-a371-114f9cba39a8
 		sourceLineageTag: surrogate_key
 		summarizeBy: none
 		sourceColumn: surrogate_key
@@ -16,7 +16,7 @@ table dim_location
 	column log_lat
 		dataType: string
 		sourceProviderType: varchar(8000)
-		lineageTag: 75f79e67-ca28-4c95-bf14-3b36f74abd0c
+		lineageTag: 4dfd1a0e-146b-494e-bcd6-ada1a2b2b08d
 		sourceLineageTag: log_lat
 		summarizeBy: none
 		sourceColumn: log_lat
@@ -25,34 +25,54 @@ table dim_location
 
 	column latitude
 		dataType: double
+		isNullable: false
 		formatString: 0.00
 		sourceProviderType: float
-		lineageTag: 42a63f6e-b94e-4cf9-8809-71229aea8fa0
+		lineageTag: 9ee28d6a-1b26-4e11-a8e7-1b22a64be5cb
 		sourceLineageTag: latitude
+		dataCategory: Latitude
 		summarizeBy: none
 		sourceColumn: latitude
 
 		changedProperty = FormatString
 
+		changedProperty = DataCategory
+
 		annotation SummarizationSetBy = Automatic
 
 	column longitude
 		dataType: double
-		formatString: 0.00
+		isNullable: false
+		formatString: 0
 		sourceProviderType: float
-		lineageTag: b4909377-af61-45a5-99b1-7ef6290f08c4
+		lineageTag: 9486a079-6843-4b8c-8ddc-0f0224338724
 		sourceLineageTag: longitude
+		dataCategory: Longitude
 		summarizeBy: none
 		sourceColumn: longitude
 
 		changedProperty = FormatString
+
+		changedProperty = DataCategory
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column street_name
+		dataType: string
+		sourceProviderType: varchar(8000)
+		lineageTag: 773a2d3f-83b3-4cfe-9e24-1fecff392e6d
+		sourceLineageTag: street_name
+		summarizeBy: none
+		sourceColumn: street_name
 
 		annotation SummarizationSetBy = Automatic
 
 	column borough
 		dataType: string
 		sourceProviderType: varchar(8000)
-		lineageTag: 5e6dc3e0-77d4-4568-9513-fe9340cfdb04
+		lineageTag: d84182ae-a76f-4382-8cf4-bb74dfdcac8f
 		sourceLineageTag: borough
 		summarizeBy: none
 		sourceColumn: borough
@@ -61,52 +81,43 @@ table dim_location
 
 	column effective_date
 		dataType: dateTime
-		isHidden
 		formatString: General Date
 		sourceProviderType: datetime2
-		lineageTag: 2d1d1b3e-034c-4514-86ee-3c8933688bf4
+		lineageTag: 8cedb7b5-79ae-401b-aa25-d58566a37fce
 		sourceLineageTag: effective_date
 		summarizeBy: none
 		sourceColumn: effective_date
-
-		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	column end_date
 		dataType: dateTime
-		isHidden
 		formatString: General Date
 		sourceProviderType: datetime2
-		lineageTag: b93184d9-c468-40be-9173-c1755366f6db
+		lineageTag: 436cfd5c-bbc8-46e8-8d93-b4d482e57069
 		sourceLineageTag: end_date
 		summarizeBy: none
 		sourceColumn: end_date
-
-		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	column is_current
 		dataType: int64
-		isHidden
 		formatString: 0
 		sourceProviderType: int
-		lineageTag: 9cdc94c7-999d-4b01-a416-a13e4873e096
+		lineageTag: c81df4eb-785a-428f-b734-5a60beca46ae
 		sourceLineageTag: is_current
 		summarizeBy: none
 		sourceColumn: is_current
-
-		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	partition dim_location = entity
 		mode: directLake
 		source
-			entityName: dim_location
+			entityName: dim_location1
 			schemaName: dbo
 			expressionSource: DatabaseQuery
 
-	annotation PBI_ResultType = Table
+	changedProperty = Name
 

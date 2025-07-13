@@ -82,5 +82,3 @@ table dim_vehicle
 			schemaName: dbo
 			expressionSource: DatabaseQuery
 
-	annotation PBI_ResultType = Table
-

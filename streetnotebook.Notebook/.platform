@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "streetnotebook"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bd267214-34dd-8862-4838-490b1d49e267"
+  }
+}

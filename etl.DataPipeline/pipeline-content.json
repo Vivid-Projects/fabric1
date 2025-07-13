@@ -66,7 +66,7 @@
       {
         "type": "TridentNotebook",
         "typeProperties": {
-          "notebookId": "2a507019-26df-8a11-43ed-5f909deada3e",
+          "notebookId": "bd267214-34dd-8862-4838-490b1d49e267",
           "workspaceId": "00000000-0000-0000-0000-000000000000"
         },
         "policy": {
@@ -129,55 +129,6 @@
             "activity": "facttable",
             "dependencyConditions": [
               "Succeeded"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "Office365Outlook",
-        "typeProperties": {
-          "inputs": {
-            "body": {
-              "To": "iborivivid5@gmail.com",
-              "Subject": "fialed etl ",
-              "Body": "<p>your etl fialed&nbsp;</p>",
-              "Sensitivity": "",
-              "Importance": "Normal"
-            },
-            "method": "post",
-            "path": "/v2/Mail"
-          }
-        },
-        "name": "Office 365 Outlook1",
-        "dependsOn": [
-          {
-            "activity": "Semantic model refresh",
-            "dependencyConditions": [
-              "Failed"
-            ]
-          },
-          {
-            "activity": "extract",
-            "dependencyConditions": [
-              "Failed"
-            ]
-          },
-          {
-            "activity": "transform",
-            "dependencyConditions": [
-              "Failed"
-            ]
-          },
-          {
-            "activity": "dimension tables",
-            "dependencyConditions": [
-              "Failed"
-            ]
-          },
-          {
-            "activity": "facttable",
-            "dependencyConditions": [
-              "Failed"
             ]
           }
         ]

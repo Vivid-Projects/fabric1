@@ -664,6 +664,157 @@ Select * from dim_location
 
 -- CELL ********************
 
+-- MAGIC %%sql
+-- MAGIC 
+-- MAGIC CREATE TABLE IF NOT EXISTS nyc_crashes1 AS
+-- MAGIC SELECT 
+-- MAGIC     n.*, 
+-- MAGIC     COALESCE(l.on_street_name, 'Unknown') AS street_name
+-- MAGIC FROM 
+-- MAGIC     silver_nyc_crashes n
+-- MAGIC LEFT JOIN 
+-- MAGIC     street_name l 
+-- MAGIC ON 
+-- MAGIC     n.collision_id = l.collision_id
+-- MAGIC WHERE 
+-- MAGIC     n.collision_id IS NOT NULL
+
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC CREATE TABLE IF NOT EXISTS dim_location1 (
+-- MAGIC   surrogate_key BIGINT,
+-- MAGIC   log_lat STRING,
+-- MAGIC   latitude DOUBLE,
+-- MAGIC   longitude DOUBLE,
+-- MAGIC   street_name STRING,
+-- MAGIC   borough STRING,
+-- MAGIC   effective_date TIMESTAMP,
+-- MAGIC   end_date TIMESTAMP,
+-- MAGIC   is_current INT
+-- MAGIC );
+
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC 
+-- MAGIC 
+-- MAGIC DROP VIEW IF EXISTS loc_view;
+-- MAGIC 
+-- MAGIC CREATE VIEW loc_view AS
+-- MAGIC SELECT 
+-- MAGIC     CONCAT(latitude, '_', longitude) AS log_lat,
+-- MAGIC     latitude,
+-- MAGIC     longitude,
+-- MAGIC     borough,
+-- MAGIC     street_name
+-- MAGIC FROM (
+-- MAGIC     SELECT *,
+-- MAGIC            ROW_NUMBER() OVER (PARTITION BY latitude, longitude ORDER BY borough) AS rn
+-- MAGIC     FROM nyc_crashes1
+-- MAGIC     WHERE latitude IS NOT NULL AND longitude IS NOT NULL
+-- MAGIC ) AS dedup
+-- MAGIC WHERE rn = 1;
+
+-- METADATA ********************
+
+-- META {
+-- META   "language": "sparksql",
+-- META   "language_group": "synapse_pyspark"
+-- META }
+
+-- CELL ********************
+
+-- MAGIC %%sql
+-- MAGIC -- Step 1: Find current max surrogate_key
+-- MAGIC WITH max_key AS (
+-- MAGIC   SELECT COALESCE(MAX(surrogate_key), 0) AS max_sk FROM dim_location1
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC -- Step 2: Prepare new distinct locations from source, add surrogate keys here
+-- MAGIC new_locations AS (
+-- MAGIC   SELECT
+-- MAGIC     CONCAT(latitude, '_', longitude) AS log_lat,
+-- MAGIC     latitude,
+-- MAGIC     longitude,
+-- MAGIC     street_name,
+-- MAGIC     borough,
+-- MAGIC     ROW_NUMBER() OVER (ORDER BY CONCAT(latitude, '_', longitude)) AS rn
+-- MAGIC   FROM loc_view
+-- MAGIC   WHERE latitude IS NOT NULL AND longitude IS NOT NULL
+-- MAGIC ),
+-- MAGIC 
+-- MAGIC -- Step 3: Assign surrogate keys using max_sk + rn
+-- MAGIC staging AS (
+-- MAGIC   SELECT
+-- MAGIC     max_key.max_sk + new_locations.rn AS surrogate_key,
+-- MAGIC     new_locations.log_lat,
+-- MAGIC     new_locations.latitude,
+-- MAGIC     new_locations.longitude,
+-- MAGIC     new_locations.street_name,
+-- MAGIC     new_locations.borough,
+-- MAGIC     CURRENT_TIMESTAMP() AS effective_date,
+-- MAGIC     CAST(NULL AS TIMESTAMP) AS end_date,
+-- MAGIC     1 AS is_current
+-- MAGIC   FROM new_locations
+-- MAGIC   CROSS JOIN max_key
+-- MAGIC )
+-- MAGIC 
+-- MAGIC -- Step 4: Now MERGE from staging
+-- MAGIC MERGE INTO dim_location1 AS target
+-- MAGIC USING staging AS source
+-- MAGIC ON target.log_lat = source.log_lat AND target.is_current = 1
+-- MAGIC 
+-- MAGIC WHEN MATCHED AND (
+-- MAGIC   NOT (target.latitude <=> source.latitude) OR
+-- MAGIC   NOT (target.longitude <=> source.longitude) OR
+-- MAGIC   NOT (target.borough <=> source.borough) OR
+-- MAGIC   NOT (target.street_name <=> source.street_name)
+-- MAGIC )
+-- MAGIC THEN UPDATE SET
+-- MAGIC   target.end_date = CURRENT_TIMESTAMP,
+-- MAGIC   target.is_current = 0
+-- MAGIC 
+-- MAGIC WHEN NOT MATCHED BY TARGET THEN
+-- MAGIC   INSERT (
+-- MAGIC     surrogate_key,
+-- MAGIC     log_lat,
+-- MAGIC     latitude,
+-- MAGIC     longitude,
+-- MAGIC     street_name,
+-- MAGIC     borough,
+-- MAGIC     effective_date,
+-- MAGIC     end_date,
+-- MAGIC     is_current
+-- MAGIC   )
+-- MAGIC   VALUES (
+-- MAGIC     source.surrogate_key,
+-- MAGIC     source.log_lat,
+-- MAGIC     source.latitude,
+-- MAGIC     source.longitude,
+-- MAGIC     source.street_name,
+-- MAGIC     source.borough,
+-- MAGIC     source.effective_date,
+-- MAGIC     source.end_date,
+-- MAGIC     source.is_current
+-- MAGIC   );
+
 
 -- METADATA ********************
 

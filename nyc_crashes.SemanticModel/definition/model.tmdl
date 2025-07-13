@@ -9,16 +9,16 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBIDesktopVersion = 2.144.1378.0 (25.06)+cba1e61f16ea36d44901f06fa446299040122394
+annotation PBIDesktopVersion = 2.146.7727.7 (Main)+bc5f9142edb5be5beb4b90d87b320b00b8f2d382
 
 annotation PBI_QueryOrder = ["DatabaseQuery"]
 
 annotation PBI_ProTooling = ["WebModelingEdit","RemoteModeling"]
 
-ref table dim_location
 ref table dim_vehicle
 ref table dim_factor
 ref table dim_date
+ref table dim_location
 ref table fact_crashes
 
 ref cultureInfo en-US
